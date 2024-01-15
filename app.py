@@ -13,12 +13,12 @@ def calculate_net_area_between_scatter_plots(folder_name):
     # Read the CSV file, allowing missing values
     df = pd.read_csv(file_path)
 
-    # Drop rows where either the first or the third column (x1 or x2) is missing
-    df = df.dropna(subset=[df.columns[0], df.columns[2]])
+    # Drop rows where either x1 or x2 is missing
+    df = df.dropna(subset=['x1', 'x2'])
 
     # Extract x and y values for both scatter plots, handling missing values
-    x1, y1 = df.iloc[:, 0].dropna(), df.iloc[:, 1].dropna()
-    x2, y2 = df.iloc[:, 2].dropna(), df.iloc[:, 3].dropna()
+    x1, y1 = df['x1'].dropna(), df['y1'].dropna()
+    x2, y2 = df['x2'].dropna(), df['y2'].dropna()
 
     # Create interpolation functions for both sets of y-values
     interp_y1 = interp1d(x1, y1, bounds_error=False, fill_value="extrapolate")
@@ -37,7 +37,18 @@ def calculate_net_area_between_scatter_plots(folder_name):
     # Calculate the net area between the two curves
     net_area = np.trapz(y_diff, combined_x)
 
+    # Write the net area to a file
+    output_file = os.path.join(folder_name, "net-area.txt")
+    with open(output_file, 'w') as f:
+        f.write(str(net_area) + " square feet")
+
     return net_area
+
+# Example usage
+# folder = 'path_to_folder'
+# area = calculate_net_area_between_scatter_plots(folder)
+# print("Net area between scatter plots:", area)
+
 
 if __name__ == "__main__":
     folder = './T1-pre'  # Replace with your folder path
