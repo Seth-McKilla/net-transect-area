@@ -50,10 +50,24 @@ def calculate_net_area_between_scatter_plots(folder_name):
 # print("Net area between scatter plots:", area)
 
 
+def custom_sort(folder):
+    # Sort by number first, then by 'pre' or 'post'
+    number, period = folder.split('-')
+    return (int(number[1:]), period == 'post')  # 'pre' will come before 'post'
+
 if __name__ == "__main__":
     base_dir = '.'  # Replace with your base directory path
-    for item in os.listdir(base_dir):
-        if os.path.isdir(item) and item.startswith('T'):
-            folder = os.path.join(base_dir, item)
-            area = calculate_net_area_between_scatter_plots(folder)
-            print(f"Net area between scatter plots in {folder}:", area)
+    output_file = "net-areas.txt"  # Output file for net areas
+
+    # Get a list of all directories that start with 'T'
+    folders = [item for item in os.listdir(base_dir) if os.path.isdir(item) and item.startswith('T')]
+
+    # Sort the list of directories using the custom sorting function
+    folders.sort(key=custom_sort)
+
+    with open(output_file, 'w') as f:
+        for folder in folders:
+            folder_path = os.path.join(base_dir, folder)
+            area = calculate_net_area_between_scatter_plots(folder_path)
+            folder_name = folder.replace('./', '')  # Remove './' from folder name
+            f.write(f"Net loss / accumulation of sediment for {folder_name}: {area} square feet\n")

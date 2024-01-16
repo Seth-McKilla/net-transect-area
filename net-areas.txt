@@ -1,0 +1,10 @@
+Net loss / accumulation of sediment for T1-pre: -3.7156403527804622 square feet
+Net loss / accumulation of sediment for T1-post: -2.536629999999996 square feet
+Net loss / accumulation of sediment for T2-pre: 1.6219101172413897 square feet
+Net loss / accumulation of sediment for T2-post: 0.6223869565217505 square feet
+Net loss / accumulation of sediment for T3-pre: -20.701593717401604 square feet
+Net loss / accumulation of sediment for T3-post: 82.98846666666626 square feet
+Net loss / accumulation of sediment for T4-pre: -16.269667901686052 square feet
+Net loss / accumulation of sediment for T4-post: 4.463539166666667 square feet
+Net loss / accumulation of sediment for T5-pre: -38.545964181818185 square feet
+Net loss / accumulation of sediment for T5-post: -2.3309439903846148 square feet
