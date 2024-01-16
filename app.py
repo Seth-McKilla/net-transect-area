@@ -51,6 +51,9 @@ def calculate_net_area_between_scatter_plots(folder_name):
 
 
 if __name__ == "__main__":
-    folder = './T5-post'  # Replace with your folder path
-    area = calculate_net_area_between_scatter_plots(folder)
-    print("Net area between scatter plots:", area)
+    base_dir = '.'  # Replace with your base directory path
+    for item in os.listdir(base_dir):
+        if os.path.isdir(item) and item.startswith('T'):
+            folder = os.path.join(base_dir, item)
+            area = calculate_net_area_between_scatter_plots(folder)
+            print(f"Net area between scatter plots in {folder}:", area)
