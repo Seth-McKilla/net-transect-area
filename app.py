@@ -24,31 +24,20 @@ def calculate_net_area_between_scatter_plots(folder_name):
     interp_y1 = interp1d(x1, y1, bounds_error=False, fill_value="extrapolate")
     interp_y2 = interp1d(x2, y2, bounds_error=False, fill_value="extrapolate")
 
-    # Combine x values and sort them
-    combined_x = np.sort(np.unique(np.concatenate((x1, x2))))
+    # Find the overlap in x values
+    x_overlap = np.sort(np.unique(np.concatenate((x1[x1.between(x2.min(), x2.max())], x2[x2.between(x1.min(), x1.max())]))))
 
     # Calculate interpolated y-values
-    interp_y1_vals = interp_y1(combined_x)
-    interp_y2_vals = interp_y2(combined_x)
+    interp_y1_vals = interp_y1(x_overlap)
+    interp_y2_vals = interp_y2(x_overlap)
 
     # Calculate the difference in y-values
     y_diff = interp_y2_vals - interp_y1_vals
 
     # Calculate the net area between the two curves
-    net_area = np.trapz(y_diff, combined_x)
-
-    # Write the net area to a file
-    output_file = os.path.join(folder_name, "net-area.txt")
-    with open(output_file, 'w') as f:
-        f.write(str(net_area) + " square feet")
+    net_area = np.trapz(y_diff, x_overlap)
 
     return net_area
-
-# Example usage
-# folder = 'path_to_folder'
-# area = calculate_net_area_between_scatter_plots(folder)
-# print("Net area between scatter plots:", area)
-
 
 def custom_sort(folder):
     # Sort by number first, then by 'pre' or 'post'
